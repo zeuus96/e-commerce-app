@@ -3,9 +3,11 @@ package com.link.linkbackend.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +15,7 @@ import java.util.Set;
 /**
  * A user.
  */
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "app_user")
 @Data
@@ -20,6 +23,7 @@ import java.util.Set;
 @Accessors(chain = true)
 public class User extends AbstractAuditingEntity<String> implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -54,9 +58,9 @@ public class User extends AbstractAuditingEntity<String> implements Serializable
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-        name = "user_authority",
-        joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
-        inverseJoinColumns = { @JoinColumn(name = "authority_name", referencedColumnName = "name") }
+            name = "user_authority",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")}
     )
     private Set<Authority> authorities = new HashSet<>();
 
