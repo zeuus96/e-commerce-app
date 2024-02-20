@@ -1,0 +1,124 @@
+package com.link.linkbackend.service;
+
+import com.link.linkbackend.domain.ProspectUser;
+import com.link.linkbackend.repository.ProspectUserRepository;
+import com.link.linkbackend.service.dto.ProspectUserDTO;
+import com.link.linkbackend.service.error.BadRequestException;
+import com.link.linkbackend.service.impl.ProspectUserServiceImpl;
+import com.link.linkbackend.service.mapper.ProspectUserMapper;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+
+@ExtendWith(MockitoExtension.class)
+public class ProspectUserServiceTest {
+
+    @Mock
+    private ProspectUserRepository prospectUserRepository;
+
+    @Mock
+    private ProspectUserMapper prospectUserMapper; // Mock the mapper
+
+    @InjectMocks
+    private ProspectUserServiceImpl prospectUserServiceImpl;
+
+    @Test
+    public void saveProspectUser_EmailAlreadyExists_ThrowsBadRequestException() {
+        // Arrange
+        ProspectUserDTO prospectUserDTO = new ProspectUserDTO();
+        prospectUserDTO.setEmail("existing@example.com");
+
+        ProspectUser existingUser = new ProspectUser();
+        existingUser.setId(1L);
+        existingUser.setEmail(prospectUserDTO.getEmail());
+
+        when(prospectUserRepository.findByEmail(prospectUserDTO.getEmail())).thenReturn(Optional.of(existingUser));
+
+        // Act & Assert
+        assertThatThrownBy(() -> prospectUserServiceImpl.saveProspectUser(prospectUserDTO))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessage("Email already in use");
+    }
+
+    @Test
+    public void saveProspectUser_CinAlreadyExists_ThrowsBadRequestException() {
+        // Arrange
+        ProspectUserDTO prospectUserDTO = ProspectUserDTO.builder()
+                .email("newEmail").cin("75607697")
+                .patentNumber("newPatentNumber").phone("newPhone").build();
+        ProspectUser existingUser = ProspectUser.builder()
+                .email("newEmail@gmail").cin("75607697").username("help")
+                .patentNumber("776678").phone("767)").build();
+
+        when(prospectUserRepository.findByEmail(prospectUserDTO.getEmail())).thenReturn(Optional.of(existingUser));
+        // Act & Assert
+        assertThatThrownBy(() -> prospectUserServiceImpl.saveProspectUser(prospectUserDTO))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessage("CIN already in use");
+    }
+
+    @Test
+    public void saveProspectUser_ReturnsProspectUserDTO() {
+        // Arrange
+        ProspectUserDTO prospectUserDTO = ProspectUserDTO.builder()
+                .email("newEmail").cin("77676777777").username("newUsername")
+                .patentNumber("newPatentNumber").phone("newPhone").build();
+        ProspectUser newUser = ProspectUser.builder()
+                .email("newEmail").cin("77676777777").username("newUsername")
+                .patentNumber("newPatentNumber").phone("newPhone").build();
+        when(prospectUserRepository.findByEmail(prospectUserDTO.getEmail())).thenReturn(Optional.empty());
+        when(prospectUserMapper.toEntity(prospectUserDTO)).thenReturn(newUser); // Mocking mapper to return existingUser
+        when(prospectUserRepository.save(newUser)).thenReturn(newUser);
+        when(prospectUserMapper.toDto(newUser)).thenReturn(prospectUserDTO);
+        // Act
+        ProspectUserDTO result = prospectUserServiceImpl.saveProspectUser(prospectUserDTO);
+
+        // Assert that the result is not null && is equal to the prospectUserDTO
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(prospectUserDTO);
+    }
+
+    @Test
+    void getAllProspectUsers_ReturnsPageOfProspectUserDTO() {
+        // Arrange
+        List<ProspectUser> prospectUsers = List.of(
+                ProspectUser.builder()
+                        .email("newEmail").cin("77676777777").username("newUsername")
+                        .patentNumber("newPatentNumber").phone("newPhone").build(),
+                ProspectUser.builder()
+                        .email("T").cin("T").username("T")
+                        .patentNumber("T").phone("T").build()
+        );
+        Pageable pageable = Pageable.unpaged();
+        Page<ProspectUser> prospectUserPage = new PageImpl<>(prospectUsers, pageable, prospectUsers.size());
+
+        when(prospectUserRepository.findAll(pageable)).thenReturn(prospectUserPage);
+
+        // Act
+        Page<ProspectUserDTO> result = prospectUserServiceImpl.getAllProspectUsers(pageable);
+
+        // Assert
+        assertThat(result).isNotNull();
+        assertThat(result).hasSize(2);
+        assertThat(result.getContent())
+                .extracting(ProspectUserDTO::getEmail, ProspectUserDTO::getCin, ProspectUserDTO::getUsername,
+                        ProspectUserDTO::getPatentNumber, ProspectUserDTO::getPhone)
+                .containsExactly(
+                        tuple("newEmail", "77676777777", "newUsername", "newPatentNumber", "newPhone"),
+                        tuple("T", "T", "T", "T", "T")
+                );
+    }
+
+}

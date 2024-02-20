@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  link:
+    image: postgres:14.5
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=link
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 127.0.0.1:5432:5432
