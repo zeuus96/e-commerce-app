@@ -1,4 +1,4 @@
-package com.link.linkbackend.controller;
+package com.link.linkbackend.resource.controller;
 
 import com.link.linkbackend.domain.Role;
 import com.link.linkbackend.service.RoleService;
@@ -20,6 +20,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/role")
 @Tag(name = "Role Resource", description = "This is role Referential for all endpoints")
+@ApiResponses(value = {
+        @ApiResponse(responseCode = "500", description = "Internal server error")})
 @Slf4j
 public class RoleController {
     private final RoleService roleService;
@@ -45,7 +47,7 @@ public class RoleController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Role created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid role name or role already exists"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+           })
     @PostMapping("/save")
     public ResponseEntity<?> saveRole(
             @RequestBody Role role
@@ -70,7 +72,7 @@ public class RoleController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Role updated successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid role name or role not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+            })
     @PutMapping("/update")
     public ResponseEntity<?> updateRole(
             @RequestBody Role role
@@ -96,7 +98,7 @@ public class RoleController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Role fetched successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid role name or role not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+           })
     @GetMapping("/get/{name}")
     public ResponseEntity<?> getRole(
             @PathVariable String name
@@ -122,10 +124,10 @@ public class RoleController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Role deleted successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid role name or role not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+           })
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteRole(
-            @RequestBody String name
+            @PathVariable String name
     ) {
         log.debug("REST request to delete Role : {}", name);
         try {

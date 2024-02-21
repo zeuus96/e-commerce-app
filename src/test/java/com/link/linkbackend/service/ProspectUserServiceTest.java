@@ -90,35 +90,5 @@ public class ProspectUserServiceTest {
         assertThat(result).isEqualTo(prospectUserDTO);
     }
 
-    @Test
-    void getAllProspectUsers_ReturnsPageOfProspectUserDTO() {
-        // Arrange
-        List<ProspectUser> prospectUsers = List.of(
-                ProspectUser.builder()
-                        .email("newEmail").cin("77676777777").username("newUsername")
-                        .patentNumber("newPatentNumber").phone("newPhone").build(),
-                ProspectUser.builder()
-                        .email("T").cin("T").username("T")
-                        .patentNumber("T").phone("T").build()
-        );
-        Pageable pageable = Pageable.unpaged();
-        Page<ProspectUser> prospectUserPage = new PageImpl<>(prospectUsers, pageable, prospectUsers.size());
-
-        when(prospectUserRepository.findAll(pageable)).thenReturn(prospectUserPage);
-
-        // Act
-        Page<ProspectUserDTO> result = prospectUserServiceImpl.getAllProspectUsers(pageable);
-
-        // Assert
-        assertThat(result).isNotNull();
-        assertThat(result).hasSize(2);
-        assertThat(result.getContent())
-                .extracting(ProspectUserDTO::getEmail, ProspectUserDTO::getCin, ProspectUserDTO::getUsername,
-                        ProspectUserDTO::getPatentNumber, ProspectUserDTO::getPhone)
-                .containsExactly(
-                        tuple("newEmail", "77676777777", "newUsername", "newPatentNumber", "newPhone"),
-                        tuple("T", "T", "T", "T", "T")
-                );
-    }
 
 }

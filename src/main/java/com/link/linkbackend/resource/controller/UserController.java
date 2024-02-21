@@ -1,4 +1,4 @@
-package com.link.linkbackend.controller;
+package com.link.linkbackend.resource.controller;
 
 import com.link.linkbackend.domain.User;
 import com.link.linkbackend.service.UserService;

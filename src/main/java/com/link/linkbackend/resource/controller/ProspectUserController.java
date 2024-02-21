@@ -1,9 +1,10 @@
-package com.link.linkbackend.controller;
+package com.link.linkbackend.resource.controller;
 
 import com.link.linkbackend.service.ProspectUserService;
 import com.link.linkbackend.service.dto.ProspectUserDTO;
 import com.link.linkbackend.service.dto.ResponseDTO;
 import com.link.linkbackend.service.error.BadRequestException;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/prospect-user")
 @Tag(name = "Prospect User Resource", description = "This is prospect user referential for all endpoints")
 @Slf4j
-
 public class ProspectUserController {
     private final ProspectUserService prospectUserService;
 
@@ -47,7 +47,7 @@ public class ProspectUserController {
     }
 
     @GetMapping("/all")
-    @Tag(name = "Get All Prospect Users", description = "This is the endpoint to get all prospect users")
+    @Operation(description = "This is the endpoint to get all prospect users")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Prospect users retrieved successfully"),
             @ApiResponse(responseCode = "500", description = "Internal server error")})
