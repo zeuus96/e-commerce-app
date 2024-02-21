@@ -1,4 +1,4 @@
-package com.link.linkbackend.controller;
+package com.link.linkbackend.resource.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;

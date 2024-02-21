@@ -6,26 +6,34 @@ import com.link.linkbackend.service.UserService;
 import com.link.linkbackend.service.dto.UserDTO;
 import com.link.linkbackend.service.error.BadRequestException;
 import com.link.linkbackend.service.mapper.UserMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-
-/**
- * Service implementation for {@link UserService}.
- */
-@Component
+@Slf4j
+@Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
+    @Override
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) {
+                return userRepository.findByUsername(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            }
+        };
     }
 
     @Override
@@ -87,4 +95,6 @@ public class UserServiceImpl implements UserService {
                 .map(userMapper::toDto)
                 .orElseThrow(() -> new BadRequestException(HttpStatus.BAD_REQUEST, "User not found"));
     }
+
+
 }

@@ -14,12 +14,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Entity
-@Table(name = "authority")
+@Table(name = "app_authority")
 public class Authority implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "name")
+    @Column(name = "name",unique = true)
     private String name;
     @Column(name = "description")
     private String description;
