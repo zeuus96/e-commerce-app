@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -16,8 +17,9 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
-public class Role implements Serializable {
+public class Role extends AbstractAuditingEntity<String> implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
