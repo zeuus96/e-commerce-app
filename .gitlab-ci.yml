@@ -25,7 +25,7 @@ include:
 package:
   stage: package
   script:
-    - mvn package
+    - mvn package -f pom.xml
   artifacts:
     paths:
       - target/*.jar   
