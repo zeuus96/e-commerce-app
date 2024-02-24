@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
@@ -15,7 +16,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @Entity
 @Table(name = "app_authority")
-public class Authority implements Serializable {
+public class Authority extends AbstractAuditingEntity<String> implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

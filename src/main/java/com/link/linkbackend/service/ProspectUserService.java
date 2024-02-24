@@ -10,4 +10,8 @@ public interface ProspectUserService {
     ProspectUserDTO saveProspectUser(ProspectUserDTO prospectUserDTO);
 
     Page<ProspectUserDTO> getAllProspectUsers(Pageable pageable);
+
+    void deleteProspectUser(Long id);
+
+    ProspectUserDTO partialUpdate(ProspectUserDTO prospectUserDTO);
 }

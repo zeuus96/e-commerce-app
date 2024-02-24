@@ -28,7 +28,7 @@ public class ProspectUserController {
     }
 
     @PostMapping("/save")
-    @Tag(name = "Save Prospect User", description = "This is the endpoint to save a new prospect user")
+    @Operation(description = "This is the endpoint to save a prospect user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Prospect user created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid prospect user or prospect user already exists"),
@@ -61,5 +61,44 @@ public class ProspectUserController {
         }
     }
 
+    @DeleteMapping("/delete/{id}")
+    @Operation(description = "This is the endpoint to delete a prospect user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Prospect user deleted successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid prospect user or prospect user not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
+    public ResponseEntity<?> deleteProspectUser(
+            @PathVariable Long id
+    ) {
+        log.debug("REST request to delete Prospect User : {}", id);
+        try {
+            prospectUserService.deleteProspectUser(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Prospect user " + id + " deleted successfully");
+        } catch (BadRequestException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO<>(e.getMessage(), "Invalid prospect user"));
+        } catch (Exception e) {
+            log.error("Internal server error {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO<>(e.getMessage(), "An error occurred while deleting prospect user"));
+        }
+    }
 
+    @PatchMapping("/update")
+    @Operation(description = "This is the endpoint to patch a prospect user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Prospect user updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid prospect user or prospect user not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")})
+    public ResponseEntity<?> updateProspectUser(
+            @RequestBody ProspectUserDTO prospectUserDTO
+    ) {
+        log.debug("REST request to update Prospect User : {}", prospectUserDTO);
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(prospectUserService.partialUpdate(prospectUserDTO));
+        } catch (BadRequestException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO<>(e.getMessage(), "Invalid prospect user"));
+        } catch (Exception e) {
+            log.error("Internal server error {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDTO<>(e.getMessage(), "An error occurred while updating prospect user"));
+        }
+    }
 }

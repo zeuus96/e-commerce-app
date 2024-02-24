@@ -6,12 +6,14 @@ import com.link.linkbackend.service.ProspectUserService;
 import com.link.linkbackend.service.dto.ProspectUserDTO;
 import com.link.linkbackend.service.error.BadRequestException;
 import com.link.linkbackend.service.mapper.ProspectUserMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class ProspectUserServiceImpl implements ProspectUserService {
     private final ProspectUserMapper prospectUserMapper;
@@ -48,6 +50,41 @@ public class ProspectUserServiceImpl implements ProspectUserService {
     @Override
     public Page<ProspectUserDTO> getAllProspectUsers(Pageable pageable) {
         return prospectUserRepository.findAll(pageable).map(prospectUserMapper::toDto);
+    }
+
+    @Override
+    public void deleteProspectUser(Long id) {
+        Optional<ProspectUser> prospectUser = prospectUserRepository.findById(id);
+        if (prospectUser.isEmpty()) {
+            log.error("Prospect user {} not found", id);
+            throw new BadRequestException("Prospect user not found");
+        }
+        prospectUserRepository.deleteById(id);
+    }
+
+    @Override
+    public ProspectUserDTO partialUpdate(ProspectUserDTO prospectUserDTO) {
+        Optional<ProspectUser> prospectUser = prospectUserRepository.findById(prospectUserDTO.getId());
+        if (prospectUser.isEmpty()) {
+            log.error("Prospect user {} not found", prospectUserDTO.getId());
+            throw new BadRequestException("Prospect user not found");
+        }
+        if (prospectUserDTO.getEmail() != null) {
+            prospectUser.get().setEmail(prospectUserDTO.getEmail());
+        }
+        if (prospectUserDTO.getUsername() != null) {
+            prospectUser.get().setUsername(prospectUserDTO.getUsername());
+        }
+        if (prospectUserDTO.getPhone() != null) {
+            prospectUser.get().setPhone(prospectUserDTO.getPhone());
+        }
+        if (prospectUserDTO.getCin() != null) {
+            prospectUser.get().setCin(prospectUserDTO.getCin());
+        }
+        if (prospectUserDTO.getPatentNumber() != null) {
+            prospectUser.get().setPatentNumber(prospectUserDTO.getPatentNumber());
+        }
+        return prospectUserMapper.toDto(prospectUserRepository.save(prospectUser.get()));
     }
 
 
