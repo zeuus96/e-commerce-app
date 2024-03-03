@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/authority")
+@ApiResponses(value = {
+        @ApiResponse(responseCode = "403", description = "Unauthorized"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")})
 @Tag(name = "Authority Resource", description = "This is authority Referential for all endpoints")
 public class AuthorityController {
 
@@ -30,7 +33,7 @@ public class AuthorityController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Authority created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid authority or authority already exists"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+            })
     public ResponseEntity<?> saveAuthority(
             @RequestBody AuthorityDTO authorityDTO
     ) {
@@ -49,7 +52,7 @@ public class AuthorityController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Authority deleted successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid authority or authority not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+           })
     public ResponseEntity<?> deleteAuthority(
             @PathVariable String name
     ) {
@@ -68,7 +71,7 @@ public class AuthorityController {
     @GetMapping("/all")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All authorities retrieved successfully"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+           })
     public ResponseEntity<?> getAllAuthorities(
             Pageable pageable) {
         log.info("REST request to get all Authorities");

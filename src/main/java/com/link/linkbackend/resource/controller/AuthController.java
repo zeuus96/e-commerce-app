@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Authentication referential")
 @ApiResponses(value = {
         @ApiResponse(responseCode = "400", description = "Invalid request"),
+        @ApiResponse(responseCode = "403", description = "Unauthorized"),
         @ApiResponse(responseCode = "500", description = "Internal server error")})
 public class AuthController {
     private final AuthenticationService authenticationService;

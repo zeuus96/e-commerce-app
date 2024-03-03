@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-public class ProspectUserServiceTest {
+ class ProspectUserServiceTest {
 
     @Mock
     private ProspectUserRepository prospectUserRepository;
@@ -35,7 +35,7 @@ public class ProspectUserServiceTest {
     private ProspectUserServiceImpl prospectUserServiceImpl;
 
     @Test
-    public void saveProspectUser_EmailAlreadyExists_ThrowsBadRequestException() {
+     void saveProspectUser_EmailAlreadyExists_ThrowsBadRequestException() {
         // Arrange
         ProspectUserDTO prospectUserDTO = new ProspectUserDTO();
         prospectUserDTO.setEmail("existing@example.com");
@@ -53,7 +53,7 @@ public class ProspectUserServiceTest {
     }
 
     @Test
-    public void saveProspectUser_CinAlreadyExists_ThrowsBadRequestException() {
+     void saveProspectUser_CinAlreadyExists_ThrowsBadRequestException() {
         // Arrange
         ProspectUserDTO prospectUserDTO = ProspectUserDTO.builder()
                 .email("newEmail").cin("75607697")
@@ -70,7 +70,7 @@ public class ProspectUserServiceTest {
     }
 
     @Test
-    public void saveProspectUser_ReturnsProspectUserDTO() {
+     void saveProspectUser_ReturnsProspectUserDTO() {
         // Arrange
         ProspectUserDTO prospectUserDTO = ProspectUserDTO.builder()
                 .email("newEmail").cin("77676777777").username("newUsername")
