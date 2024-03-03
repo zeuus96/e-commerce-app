@@ -21,6 +21,7 @@ import java.util.List;
 @RequestMapping("/role")
 @Tag(name = "Role Resource", description = "This is role Referential for all endpoints")
 @ApiResponses(value = {
+        @ApiResponse(responseCode = "403", description = "Unauthorized"),
         @ApiResponse(responseCode = "500", description = "Internal server error")})
 @Slf4j
 public class RoleController {
@@ -33,7 +34,7 @@ public class RoleController {
     @Operation(summary = "Get all roles")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Roles fetched successfully"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+            })
     @GetMapping("/all")
     public ResponseEntity<List<Role>> getAllRoles(
             @RequestParam Pageable pageable

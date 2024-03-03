@@ -46,7 +46,7 @@ public class ProspectUser extends AbstractAuditingEntity<String> implements Seri
     @Column(length = 50, unique = true, nullable = false)
     private String username;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String description;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

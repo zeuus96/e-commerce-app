@@ -21,6 +21,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@ApiResponses(value = {
+        @ApiResponse(responseCode = "403", description = "Unauthorized"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")})
 @Tag(name = "User Ref", description = "This is user Referential for all endpoints")
 @Slf4j
 public class UserController {
@@ -33,7 +36,7 @@ public class UserController {
     @Operation(summary = "Get all users")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Users fetched successfully"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+            })
     @GetMapping("/all")
     public ResponseEntity<List<UserDTO>> getAllUsers(@Parameter Pageable pageable) {
         log.debug("Fetching all users");
@@ -45,7 +48,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User fetched successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid username or user not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+          })
     @GetMapping("/find/{username}")
     public ResponseEntity<UserDTO> getUser(@PathVariable String username) {
         log.debug("Fetching user by username: {}", username);
@@ -57,7 +60,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User deleted successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid user ID or user not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+            })
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         log.debug("Deleting user with ID: {}", id);
@@ -77,7 +80,7 @@ public class UserController {
     @PostMapping("/save")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User saved successfully"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+           })
 
     public ResponseEntity<?> saveUser(@RequestBody User user) {
         log.debug("Saving new user: {}", user);
@@ -106,7 +109,7 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User updated successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid user ID or user not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+           })
     @PatchMapping("/partial-update")
     public ResponseEntity<?> partialUpdateUser(@RequestBody User user) {
         log.debug("Partially updating user: {}", user);

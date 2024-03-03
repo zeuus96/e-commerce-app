@@ -54,19 +54,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void signup(UserDTO userDto) {
-        var user = userMapper.toEntity(userDto).setPassword(passwordEncoder.encode(userDto.getPassword()));
-        if (!CollectionUtils.isEmpty(userDto.getRoleList())){
-            Set<Role> userRoles = new HashSet<>();
-            for (String roleName : userDto.getRoleList()) {
-                roleRepository.findById(roleName).ifPresentOrElse(roleFound ->{
-                    userRoles.add(roleFound);
-                },() -> {
-                    log.error("Added role = {} does not exist", roleName);
-                });
+        if ( userRepository.existsByUsername(userDto.getUsername()) ){
+            throw new IllegalArgumentException("User already Exists");
+        }else {
+            var user = userMapper.toEntity(userDto).setPassword(passwordEncoder.encode(userDto.getPassword()));
+            if (!CollectionUtils.isEmpty(userDto.getRoleList())){
+                Set<Role> userRoles = new HashSet<>();
+                for (String roleName : userDto.getRoleList()) {
+                    roleRepository.findById(roleName).ifPresentOrElse(roleFound ->{
+                        userRoles.add(roleFound);
+                    },() -> {
+                        log.error("Added role = {} does not exist", roleName);
+                    });
+                }
             }
+            userRepository.save(user);
+            log.info("User saved succesfully");
         }
-        userRepository.save(user);
-        log.info("User saved succesfully");
+
     }
 }
 

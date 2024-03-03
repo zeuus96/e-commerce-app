@@ -33,16 +33,16 @@ public class Address extends AbstractAuditingEntity<String> implements Serializa
     @Column(name = "country", length = 50, nullable = false)
     private String country;
 
-    @Column(name = "street", length = 50, nullable = false)
+    @Column(name = "street")
     private String street;
 
     @Column(name = "zip_code", length = 50, nullable = false)
     private String zipCode;
 
-    @Column(name = "longitude", nullable = false)
+    @Column(name = "longitude")
     private Double longitude;
 
-    @Column(name = "latitude", nullable = false)
+    @Column(name = "latitude")
     private Double latitude;
 
 

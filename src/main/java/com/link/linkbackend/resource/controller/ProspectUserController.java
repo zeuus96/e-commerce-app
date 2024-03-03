@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/prospect-user")
+@ApiResponses(value = {
+        @ApiResponse(responseCode = "403", description = "Unauthorized"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")})
 @Tag(name = "Prospect User Resource", description = "This is prospect user referential for all endpoints")
 @Slf4j
 public class ProspectUserController {
@@ -32,7 +35,7 @@ public class ProspectUserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Prospect user created successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid prospect user or prospect user already exists"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+            })
     public ResponseEntity<?> saveProspectUser(
             @RequestBody ProspectUserDTO prospectUserDTO
     ) {
@@ -50,7 +53,7 @@ public class ProspectUserController {
     @Operation(description = "This is the endpoint to get all prospect users")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Prospect users retrieved successfully"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+    })
     public ResponseEntity<?> getAllProspectUsers(@Parameter Pageable pageable) {
         log.debug("REST request to get all Prospect Users {}", pageable);
         try {
@@ -64,16 +67,16 @@ public class ProspectUserController {
     @DeleteMapping("/delete/{id}")
     @Operation(description = "This is the endpoint to delete a prospect user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Prospect user deleted successfully"),
+            @ApiResponse(responseCode = "204", description = "Prospect user deleted successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid prospect user or prospect user not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+    })
     public ResponseEntity<?> deleteProspectUser(
             @PathVariable Long id
     ) {
         log.debug("REST request to delete Prospect User : {}", id);
         try {
             prospectUserService.deleteProspectUser(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Prospect user " + id + " deleted successfully");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Prospect user " + id + " deleted successfully");
         } catch (BadRequestException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDTO<>(e.getMessage(), "Invalid prospect user"));
         } catch (Exception e) {
@@ -87,7 +90,7 @@ public class ProspectUserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Prospect user updated successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid prospect user or prospect user not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")})
+            })
     public ResponseEntity<?> updateProspectUser(
             @RequestBody ProspectUserDTO prospectUserDTO
     ) {
