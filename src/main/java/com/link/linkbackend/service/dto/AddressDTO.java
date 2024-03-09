@@ -1,13 +1,15 @@
 package com.link.linkbackend.service.dto;
 
 import com.link.linkbackend.domain.AbstractAuditingEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class AddressDTO extends AbstractAuditingEntity<String> {
 
     private long id;

@@ -23,7 +23,7 @@ public class ProspectUser extends AbstractAuditingEntity<String> implements Seri
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "cin", length = 13, unique = true)
     private String cin;
@@ -52,5 +52,9 @@ public class ProspectUser extends AbstractAuditingEntity<String> implements Seri
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "contact_id", referencedColumnName = "id")
+    private Contact contact;
 
 }

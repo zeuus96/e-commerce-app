@@ -3,16 +3,12 @@ package com.link.linkbackend.service.dto;
 import com.link.linkbackend.domain.AbstractAuditingEntity;
 import lombok.*;
 
-import java.io.Serial;
-
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class ProspectUserDTO extends AbstractAuditingEntity<String>  {
-    @Serial
-    private static final long serialVersionUID = 1L;
 
     private long id;
     private String cin;

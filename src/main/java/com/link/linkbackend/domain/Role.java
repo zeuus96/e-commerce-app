@@ -2,6 +2,7 @@ package com.link.linkbackend.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 /**
  * A Role.
  */
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "role")
 @Data

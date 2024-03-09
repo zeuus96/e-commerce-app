@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 @Accessors(chain = true)
 public class User extends AbstractAuditingEntity<String> implements Serializable, UserDetails {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

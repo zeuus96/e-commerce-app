@@ -12,12 +12,13 @@ import java.io.Serializable;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "address")
+@Table(name = "shop")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class Address extends AbstractAuditingEntity<String> implements Serializable {
+public class Shop extends AbstractAuditingEntity<String> implements Serializable {
+
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -27,23 +28,17 @@ public class Address extends AbstractAuditingEntity<String> implements Serializa
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "city", length = 50, nullable = false)
-    private String city;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "country", length = 50, nullable = false)
-    private String country;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "street")
-    private String street;
+    @Column(name = "rate")
+    private int rate;
 
-    @Column(name = "zip_code", length = 50, nullable = false)
-    private String zipCode;
-
-    @Column(name = "longitude")
-    private Double longitude;
-
-    @Column(name = "latitude")
-    private Double latitude;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contact_id", referencedColumnName = "id")
+    private Contact contact;
 
 }
