@@ -4,7 +4,7 @@ import com.link.linkbackend.domain.User;
 import com.link.linkbackend.repository.UserRepository;
 import com.link.linkbackend.service.UserService;
 import com.link.linkbackend.service.dto.UserDTO;
-import com.link.linkbackend.service.error.BadRequestException;
+import com.link.linkbackend.exception.BadRequestException;
 import com.link.linkbackend.service.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

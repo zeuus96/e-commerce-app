@@ -1,4 +1,4 @@
-package com.link.linkbackend.service.error;
+package com.link.linkbackend.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

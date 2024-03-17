@@ -16,12 +16,12 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "order")
+@Table(name = "purchase_order")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class Order extends AbstractAuditingEntity<String> implements Serializable {
+public class PurchaseOrder extends AbstractAuditingEntity<String> implements Serializable {
 
 
     @Serial
@@ -48,12 +48,11 @@ public class Order extends AbstractAuditingEntity<String> implements Serializabl
     @Column(name = "rate")
     private int rate;
 
-    @OneToMany(mappedBy = "order")
-    @org.springframework.data.annotation.Transient
-    @JsonIgnoreProperties(value = {"brand", "shop", "order"}, allowSetters = true)
+    @OneToMany(mappedBy = "purchaseOrder")
+    @JsonIgnoreProperties(value = {"brand", "shop", "purchaseOrder"}, allowSetters = true)
     private List<OrderItem> items = new ArrayList<>();
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "purchaseOrder", cascade = CascadeType.ALL)
     private DeliverySchedule deliverySchedule;
 
     @ManyToOne

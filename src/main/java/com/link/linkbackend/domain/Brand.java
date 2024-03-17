@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -39,4 +40,6 @@ public class Brand extends AbstractAuditingEntity<String> implements Serializabl
     @Column(name = "rate")
     private int rate;
 
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    private List<Product> products;
 }

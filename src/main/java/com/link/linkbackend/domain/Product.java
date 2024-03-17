@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "order")
+@Table(name = "product")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -52,6 +52,7 @@ public class Product extends AbstractAuditingEntity<String> implements Serializa
     private String status;
 
     @ManyToOne
+    @JoinColumn(name = "brand_id")
     @JsonIgnoreProperties(value = { "contact" }, allowSetters = true)
     private Brand brand;
 

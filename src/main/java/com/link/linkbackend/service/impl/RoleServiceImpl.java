@@ -3,7 +3,7 @@ package com.link.linkbackend.service.impl;
 import com.link.linkbackend.domain.Role;
 import com.link.linkbackend.repository.RoleRepository;
 import com.link.linkbackend.service.RoleService;
-import com.link.linkbackend.service.error.BadRequestException;
+import com.link.linkbackend.exception.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

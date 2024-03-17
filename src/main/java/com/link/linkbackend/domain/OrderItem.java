@@ -1,5 +1,6 @@
 package com.link.linkbackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,6 +38,10 @@ public class OrderItem extends AbstractAuditingEntity<String> implements Seriali
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    @JsonIgnoreProperties("items")
+    private PurchaseOrder purchaseOrder;
     @org.springframework.data.annotation.Transient
     public double getPrice() {
         return product.getPrice() * quantity;

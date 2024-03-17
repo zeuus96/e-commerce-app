@@ -4,7 +4,7 @@ import com.link.linkbackend.domain.User;
 import com.link.linkbackend.service.UserService;
 import com.link.linkbackend.service.dto.ResponseDTO;
 import com.link.linkbackend.service.dto.UserDTO;
-import com.link.linkbackend.service.error.BadRequestException;
+import com.link.linkbackend.exception.BadRequestException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

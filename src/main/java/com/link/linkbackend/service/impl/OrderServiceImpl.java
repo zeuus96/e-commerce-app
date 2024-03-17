@@ -2,7 +2,7 @@ package com.link.linkbackend.service.impl;
 
 import com.link.linkbackend.domain.OrderItem;
 import com.link.linkbackend.domain.Product;
-import com.link.linkbackend.exception.ProductNotFoundException;
+import com.link.linkbackend.exception.ObjectNotFoundException;
 import com.link.linkbackend.repository.OrderRepository;
 import com.link.linkbackend.repository.ProductRepository;
 import com.link.linkbackend.service.OrderService;
@@ -19,7 +19,6 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -60,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
                     .distinct()
                     .filter(p -> p.getId().equals(orderItemDTO.getProductId()))
                     .findFirst()
-                    .orElseThrow(() -> new ProductNotFoundException("Product with ID " + orderItemDTO.getProductId() + " not found"));
+                    .orElseThrow(() -> new ObjectNotFoundException("Product with ID " + orderItemDTO.getProductId() + " not found"));
 
             var item = new OrderItem()
                     .setQuantity(orderItemDTO.getQuantity())
@@ -76,12 +75,12 @@ public class OrderServiceImpl implements OrderService {
         List<Long> productIds = orderItemsDto.stream()
                 .map(ItemDTO::getProductId)
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                .toList();
 
         List<Product> products = productRepository.findAllById(productIds);
 
         if (CollectionUtils.isEmpty(products)) {
-            throw new ProductNotFoundException("No products found for the given product IDs: " + productIds);
+            throw new ObjectNotFoundException("No products found for the given product IDs: " + productIds);
         }
 
         return products;

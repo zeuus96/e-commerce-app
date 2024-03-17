@@ -4,7 +4,7 @@ import com.link.linkbackend.domain.Authority;
 import com.link.linkbackend.repository.AuthorityRepository;
 import com.link.linkbackend.service.AuthorityService;
 import com.link.linkbackend.service.dto.AuthorityDTO;
-import com.link.linkbackend.service.error.BadRequestException;
+import com.link.linkbackend.exception.BadRequestException;
 import com.link.linkbackend.service.mapper.AuthorityMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

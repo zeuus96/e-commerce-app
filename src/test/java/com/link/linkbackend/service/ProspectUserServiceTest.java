@@ -3,7 +3,7 @@ package com.link.linkbackend.service;
 import com.link.linkbackend.domain.ProspectUser;
 import com.link.linkbackend.repository.ProspectUserRepository;
 import com.link.linkbackend.service.dto.ProspectUserDTO;
-import com.link.linkbackend.service.error.BadRequestException;
+import com.link.linkbackend.exception.BadRequestException;
 import com.link.linkbackend.service.impl.ProspectUserServiceImpl;
 import com.link.linkbackend.service.mapper.ProspectUserMapper;
 import org.junit.jupiter.api.Test;

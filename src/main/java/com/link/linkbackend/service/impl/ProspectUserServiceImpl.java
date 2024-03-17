@@ -4,7 +4,7 @@ import com.link.linkbackend.domain.ProspectUser;
 import com.link.linkbackend.repository.ProspectUserRepository;
 import com.link.linkbackend.service.ProspectUserService;
 import com.link.linkbackend.service.dto.ProspectUserDTO;
-import com.link.linkbackend.service.error.BadRequestException;
+import com.link.linkbackend.exception.BadRequestException;
 import com.link.linkbackend.service.mapper.ProspectUserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

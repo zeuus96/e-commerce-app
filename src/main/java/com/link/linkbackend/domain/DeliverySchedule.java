@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -12,7 +13,7 @@ import java.time.Instant;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class DeliverySchedule  extends AbstractAuditingEntity<String> implements Serializable {
-
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -26,7 +27,7 @@ public class DeliverySchedule  extends AbstractAuditingEntity<String> implements
 
     @OneToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private Order order;
+    private PurchaseOrder purchaseOrder;
 }
 
 

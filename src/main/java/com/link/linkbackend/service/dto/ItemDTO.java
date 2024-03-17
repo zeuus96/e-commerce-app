@@ -1,5 +1,6 @@
 package com.link.linkbackend.service.dto;
 
+import com.link.linkbackend.domain.AbstractAuditingEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemDTO {
+public class ItemDTO extends AbstractAuditingEntity<String> {
 
     @Positive
     @Schema(description = "The quantity of the order item.")

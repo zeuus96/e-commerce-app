@@ -3,7 +3,7 @@ package com.link.linkbackend.resource.controller;
 import com.link.linkbackend.service.AuthorityService;
 import com.link.linkbackend.service.dto.AuthorityDTO;
 import com.link.linkbackend.service.dto.ResponseDTO;
-import com.link.linkbackend.service.error.BadRequestException;
+import com.link.linkbackend.exception.BadRequestException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
